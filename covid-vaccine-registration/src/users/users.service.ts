@@ -12,7 +12,7 @@ export class UsersService {
     return `User Created`;
   }
   public updateUserById() {
-    return `Update User By Id`;
+    return `Updated User By Id`;
   }
   public deleteUserById() {
     return `Delete User By Id`;
