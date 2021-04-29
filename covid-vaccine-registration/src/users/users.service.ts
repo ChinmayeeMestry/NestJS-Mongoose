@@ -9,7 +9,7 @@ export class UsersService {
     return `Get User Service By Id`;
   }
   public createUser() {
-    return `Create User`;
+    return `User Created`;
   }
   public updateUserById() {
     return `Update User By Id`;
