@@ -23,4 +23,8 @@ export class CreateUsersDTO {
     @MinLength(10, { message: `Your Mobile Number Should Be 10 Digits` })
     @MaxLength(10, { message: `Your Mobile Number Should Be 10 Digits` })
     mobile: String
+
+    @IsString({ message: `Your Aadhar Card Should Be String` })
+    @IsNotEmpty({ message: `Your Aadhar Card Should Not Be Empty`})
+    aadhar_card: String
 }

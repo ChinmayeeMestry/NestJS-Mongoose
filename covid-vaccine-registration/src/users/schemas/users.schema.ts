@@ -21,5 +21,9 @@ export const UsersSchema = new Schema({
     mobile: {
         type: String,
         required: true
+    },
+    aadhar_card: {
+        type: String,
+        required: true
     }
 })

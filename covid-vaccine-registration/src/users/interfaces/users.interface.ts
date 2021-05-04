@@ -5,5 +5,6 @@ export interface Users extends Document {
     last_name: String,
     age: Number,
     address: String,
-    mobile: String
+    mobile: String,
+    aadhar_card: String
 }
