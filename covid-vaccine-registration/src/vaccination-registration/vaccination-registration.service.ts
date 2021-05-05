@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import  axios from 'axios';
 import { VaccinationRegistration } from './interfaces/vaccination_registration.interface';
 import { CreateVaccinationRegistrationDTO } from './dto/vaccination_registration.dto';
 
@@ -31,9 +32,25 @@ export class VaccinationRegistrationService {
      }
 
     //  This approach will generate ID for each object inside array
-     async createVaccinationRegistration(createvaccinationRegistrationModelDTO: CreateVaccinationRegistrationDTO): Promise<VaccinationRegistration> {
+     async createVaccinationRegistration(createvaccinationRegistrationModelDTO: CreateVaccinationRegistrationDTO): Promise<any> {
         try {
+            const getHospitalSeats = await axios.get(`http://localhost:3000/hospital/${createvaccinationRegistrationModelDTO.hospital_id}`);
             const vaccinationRegistration =  await new this.vaccinationRegistrationModel(createvaccinationRegistrationModelDTO).save();
+            let updateSeats : Number = 0
+            let updateSeatObj : Object; 
+            getHospitalSeats.data.availability.map((data : any, index: any) =>{
+                if(data.date === createvaccinationRegistrationModelDTO.date_for_vaccination){
+                    updateSeats = data.seats - 1;
+                    updateSeatObj = {
+                        date : data.date,
+                        seats : updateSeats
+                    };
+                    getHospitalSeats.data.availability.splice(index, 1, updateSeatObj);                  
+                } 
+            })
+            await axios.put(`http://localhost:3000/hospital/${createvaccinationRegistrationModelDTO.hospital_id}`, { 
+                availability: getHospitalSeats.data.availability 
+            });
             return vaccinationRegistration;
          }
          catch(e) {

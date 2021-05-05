@@ -57,7 +57,7 @@ export class HospitalService {
     //  }
 
 
-     async updateHospitalById(id: String,createHospitalDTO: CreateHospitalDTO): Promise<Hospital> {
+     async updateHospitalById(id: String,createHospitalDTO: CreateHospitalDTO): Promise<any> {
         try {
             const hospital =  await this.hospitalModel.findOneAndUpdate({_id: id}, createHospitalDTO, {new: true}).exec();
             return hospital;
